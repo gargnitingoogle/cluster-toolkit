@@ -378,7 +378,28 @@ deployment_groups:
     source: modules/file-system/cloud-storage-bucket
     settings:
       local_mount: /gcs
-      mount_options: defaults,rw,_netdev,implicit_dirs,allow_other,implicit_dirs,file_mode=777,dir_mode=777
+      mount_options: defaults,rw,_netdev,implicit_dirs,allow_other,implicit_dirs,file_mode=777,dir_mode=777,log_severity=trace,log_file=/tmp/gcsfuse_normal_mount.log,log_format=text
+      random_suffix: true
+
+  - id: checkpoints-bucket
+    source: modules/file-system/cloud-storage-bucket
+    settings:
+      local_mount: /checkpoints
+      mount_options: defaults,rw,_netdev,allow_other,file_mode=777,dir_mode=777,profile=aiml-checkpointing,log_severity=trace,log_file=/tmp/gcsfuse_checkpoints.log,log_format=text
+      random_suffix: true
+
+  - id: training-data-bucket
+    source: modules/file-system/cloud-storage-bucket
+    settings:
+      local_mount: /training_data
+      mount_options: defaults,rw,_netdev,allow_other,file_mode=777,dir_mode=777,profile=aiml-training,log_severity=trace,log_file=/tmp/gcsfuse_training.log,log_format=text
+      random_suffix: true
+
+  - id: model-serving-bucket
+    source: modules/file-system/cloud-storage-bucket
+    settings:
+      local_mount: /model_serving
+      mount_options: defaults,rw,_netdev,allow_other,file_mode=777,dir_mode=777,profile=aiml-serving,log_severity=trace,log_file=/tmp/gcsfuse_serving.log,log_format=text
       random_suffix: true
 
   - id: gpunets
@@ -635,6 +656,9 @@ deployment_groups:
     - slurm_login
     - homefs
     - data-bucket
+    - checkpoints-bucket
+    - training-data-bucket
+    - model-serving-bucket
     settings:
       enable_controller_public_ips: $(vars.enable_controller_public_ips)
       machine_type: c2-standard-8
