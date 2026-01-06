@@ -42,6 +42,7 @@ vars:
   nccl_gib_version: 1.1.0
   libnccl_version: 2.27.5-1+cuda12.9
   base_network_name: $(vars.deployment_name)
+  instance_image_family: gn-a3-ultra-test-01-u22
 
   #Provisioning models (set to true or fill in reservation name, pick only one)
   a3u_reservation_name: "" # supply reservation name
@@ -241,7 +242,7 @@ deployment_groups:
       machine_type: $(vars.image_build_machine_type)
       source_image: $(vars.base_image.image)
       source_image_project_id: [$(vars.base_image.project)]
-      image_family: $(vars.instance_image.family)
+      image_family: $(vars.instance_image_family)
       omit_external_ip: false
 
       # Unattended upgrades are disabled in this blueprint so that software does not
