@@ -281,10 +281,7 @@ deployment_groups:
         subnet_ip: $(vars.net0_range)
       firewall_rules:
       - name: $(vars.base_network_name)-internal-0
-        ranges:
-        - $(vars.net0_range)
-        - $(vars.filestore_ip_range)
-        - 35.235.240.0/20
+        ranges: [$(vars.net0_range)]
         allow:
         - protocol: tcp
         - protocol: udp
