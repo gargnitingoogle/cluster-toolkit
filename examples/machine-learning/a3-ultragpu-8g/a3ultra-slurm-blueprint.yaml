@@ -372,6 +372,9 @@ deployment_groups:
                       type_cache_max_size_mb=-1,\
                       dir_mode=777,\
                       file_mode=777,\
+                      log_severity=trace,\
+                      log_file=/tmp/gcsfuse_normal.log,\
+                      log_format=text,\
                       allow_other"
 
   # (Optional) Create a mount-point optimized for checkpoint writing/reading Uses
@@ -388,6 +391,9 @@ deployment_groups:
                       cache_dir=/mnt/localssd,\
                       dir_mode=777,\
                       file_mode=777,\
+                      log_severity=trace,\
+                      log_file=/tmp/gcsfuse_checkpoints.log,\
+                      log_format=text,\
                       allow_other"
 
   # (Optional) Create a mount-point optimized for reading training data.
@@ -408,6 +414,9 @@ deployment_groups:
       mount_options: "profile=aiml-training,\
                       dir_mode=777,\
                       file_mode=777,\
+                      log_severity=trace,\
+                      log_file=/tmp/gcsfuse_training.log,\
+                      log_format=text,\
                       allow_other"
 
   # (Optional) Create a mount-point optimized for model serving.
@@ -423,6 +432,9 @@ deployment_groups:
                       cache_dir=/mnt/localssd,\
                       dir_mode=777,\
                       file_mode=777,\
+                      log_severity=trace,\
+                      log_file=/tmp/gcsfuse_serving.log,\
+                      log_format=text,\
                       allow_other"
 
 - group: cluster
