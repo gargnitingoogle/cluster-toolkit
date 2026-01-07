@@ -1,0 +1,38 @@
+name: Mirror Upstream Develop
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs at the start of every hour
+  workflow_dispatch:      # Allows you to trigger it manually for testing
+
+permissions:
+  contents: write         # Required to push changes to your fork
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0 # Fetches all history for all branches and tags
+
+      - name: Sync with Upstream
+        run: |
+          # 1. Configure Git
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+          # 2. Add the original repo as a remote
+          git remote add upstream https://github.com/googlecloudplatform/cluster-toolkit.git
+          
+          # 3. Fetch the latest from upstream develop
+          git fetch upstream develop
+
+          # 4. Force the local develop branch to match upstream/develop
+          # WARNING: This overwrites any local changes in your fork's develop branch
+          git reset --hard upstream/develop
+
+          # 5. Push the mirrored branch back to your fork
+          git push origin develop --force
