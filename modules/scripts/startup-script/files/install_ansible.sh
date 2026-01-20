@@ -14,6 +14,8 @@
 # limitations under the License.
 
 set -ex
+export DEBIAN_FRONTEND=noninteractive
+export UCF_FORCE_CONFFOLD=1
 REQ_ANSIBLE_VERSION=2.15
 REQ_ANSIBLE_PIP_VERSION=8.7.0
 REQ_PIP_WHEEL_VERSION=0.45.1
@@ -34,7 +36,7 @@ install_python_deps() {
 	if [ -f /etc/debian_version ]; then
 		apt_wait
 		apt-get update --allow-releaseinfo-change-origin --allow-releaseinfo-change-label
-		apt-get install -o DPkg::Lock::Timeout=600 -y python3-setuptools python3-venv
+		apt-get install -y -o DPkg::Lock::Timeout=600 -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" python3-setuptools python3-venv
 	fi
 }
 
@@ -93,7 +95,7 @@ install_python3_dnf() {
 install_python3_apt() {
 	apt_wait
 	apt-get update --allow-releaseinfo-change-origin --allow-releaseinfo-change-label
-	apt-get install -o DPkg::Lock::Timeout=600 -y python3 python3-setuptools python3-pip python3-venv
+	apt-get install -y -o DPkg::Lock::Timeout=600 -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" python3 python3-setuptools python3-pip python3-venv
 	python_path=$(command -v python3)
 }
 
