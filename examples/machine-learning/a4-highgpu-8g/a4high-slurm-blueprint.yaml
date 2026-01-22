@@ -47,7 +47,7 @@ vars:
   #Provisioning models (set to true or fill in reservation name, pick only one)
   a4h_reservation_name: "" # supply reservation name
   a4h_dws_flex_enabled: false
-  a4h_enable_spot_vm: false
+  a4h_enable_spot_vm: true
 
   # To enable Managed-Lustre please uncomment this section and fill out the settings.
   # Additionally, please uncomment the private_service_access and managed-lustre modules.
