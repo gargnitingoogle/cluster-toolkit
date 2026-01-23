@@ -40,10 +40,10 @@ if [ "$EXACT_IN_FSTAB" = true ] && [ "${EXACT_MOUNTED}" = true ]; then
 	exit 0
 fi
 
-# Fail if previous fstab entry is using same local mount
+# Clean up if previous fstab entry is using same local mount
 if [ "$SAME_LOCAL_IN_FSTAB" = true ] && [ "${EXACT_IN_FSTAB}" = false ]; then
-	echo "Mounting failed as local mount: ${LOCAL_MOUNT} was already in use in fstab"
-	exit 1
+	echo "Removing existing fstab entry for ${LOCAL_MOUNT} to resolve conflict"
+	sed -i "\|[[:space:]]${LOCAL_MOUNT}[[:space:]]|d" /etc/fstab
 fi
 
 # Add to fstab if entry is not already there
